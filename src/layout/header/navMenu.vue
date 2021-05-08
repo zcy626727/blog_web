@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import logo from '../assets/img/cat.jpg'
+import logo from '@/assets/img/cat.jpg'
 export default {
     name:'nav-menu',
     data(){
@@ -47,18 +47,16 @@ export default {
   display: flex;
   justify-content: space-between;
   align-content: space-around;
+  height: 60px;
   
   
-
   .logo{
     position: relative;
     display: inline-block;
-
+    width: 45px;
     .el-image{
-      top: 30%;
-      margin-top: -150px;
+      margin-top: 10px;
       width:45px;
-      height:45px
     }
     .image-slot{
       margin-top: -5px;

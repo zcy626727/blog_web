@@ -13,7 +13,7 @@
           <!-- <i class="iconfont icon-redu"></i> -->
         </div>
         <div class="title">
-          <router-link style="text-decoration: none;" to="/articles/details"><h3><a class="c-hover-blue c-text" href="">{{ title }}</a></h3></router-link>
+          <h3><a class="c-hover-blue c-text" @click="routeToDetails(1)" style="cursor:pointer;">{{ title }}</a></h3>
         </div>
         <div class="info ">
           <i class="iconfont icon-yanjing"
@@ -94,6 +94,11 @@ export default {
     infoCli(event) {
       //路由跳转
     },
+    routeToDetails(id){//跳转到详细页面
+      this.$router.push({
+          path: `/articles/details/${id}`,
+        })
+    }
   },
 };
 </script>
@@ -125,6 +130,7 @@ export default {
       //不留空白
       white-space: nowrap;
       margin-left: 10px;
+      
       //单行超出隐藏
       overflow: hidden;
       text-overflow: ellipsis;
@@ -133,6 +139,12 @@ export default {
       -webkit-line-clamp: 2;
 
       word-wrap: break-word;
+      
+      h3{
+        a{
+          color: #242424;
+        }
+      }
     }
 
     .info {

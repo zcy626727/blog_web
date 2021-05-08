@@ -1,6 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Details from '@/views/article/details'
-import List from '@/views/article/list'
 import Layout from "@/layout/body";
 
 const routes = [{
@@ -15,15 +13,17 @@ const routes = [{
         redirect: '/articles/list',
         component: Layout,
         children: [{
-                path: 'details',
-                name: 'Details',
-                component: Details
-            },
-            {
                 path: 'list',
                 name: 'List',
-                component: List
-            }
+                component: () =>
+                    import ('@/views/article/list')
+            },
+            {
+                path: 'details/:id',
+                name: 'Details',
+                component: () =>
+                    import ('@/views/article/details')
+            },
         ]
     },
 
