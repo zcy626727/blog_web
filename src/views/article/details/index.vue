@@ -1,5 +1,5 @@
 <template>
-  <el-backtop target=".page-component__scroll .el-scrollbar__wrap"></el-backtop>
+  <!-- <el-backtop target=".page-component__scroll .el-scrollbar__wrap"></el-backtop>
   <el-backtop target=".page-component__scroll .el-scrollbar__wrap" :bottom="100">
     <div
       style="{
@@ -14,7 +14,7 @@
     >
       UP
     </div>
-  </el-backtop>
+  </el-backtop> -->
   <el-aside class="c-margin-t-large m-mobile-hide" width="20%">left</el-aside>
 
   <el-main>

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import NavMenu from "@/components/navMenu";
+import NavMenu from "./navMenu";
 export default {
   name: "header",
   components:{
