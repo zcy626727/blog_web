@@ -12,7 +12,8 @@
   </div>
 
   <el-menu
-    :default-active="activeIndex2"
+  
+    :default-active="2"
     class="menu"
     mode="horizontal"
     @select="handleSelect"

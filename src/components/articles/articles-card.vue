@@ -1,36 +1,45 @@
 <template>
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_2524720_ib24f5nq4k.css" />
-
-  <el-card :body-style="{ padding: '1%' }" shadow="hover">
+  <el-card :body-style="{ padding: '1%' }" shadow="hover" class="c-margin-b">
     <div class="card-box">
-      <div class="content">
+      <div
+        class="content"
+        :style="
+          imageSrc == 'no' ? 'width: 99% !important;' : 'width: 65% !important;'
+        "
+        id="content"
+      >
         <div class="top">
-          <i class="el-icon-time"> 发布于{{shijian}} </i>&ensp;
+          <i class="el-icon-time"> 发布于{{ shijian }} </i>&ensp;
           <!-- <i class="iconfont icon-redu"></i> -->
         </div>
-        <div class="title"><h3>{{title}}</h3></div>
-        <div class="info">
-          <i class="iconfont icon-pinglun"><span>{{guankan}}观看</span></i>&ensp;
-          <i class="iconfont icon-guankancishu"><span>{{pinglun}}条评论</span></i>
+        <div class="title">
+          <router-link style="text-decoration: none;" to="/articles/details"><h3><a class="c-hover-blue c-text" href="">{{ title }}</a></h3></router-link>
+        </div>
+        <div class="info ">
+          <i class="iconfont icon-yanjing"
+            ><span>{{ guankan }}观看</span></i
+          >&ensp;
+          <i class="iconfont icon-pinglun"
+            ><span>{{ pinglun }}条评论</span></i
+          >
         </div>
         <div class="des">
-          <p>{{describe}}</p>
+          <p>{{ describe }}</p>
         </div>
         <div class="footer">
           <el-button @click="infoCli">详细信息</el-button>
         </div>
       </div>
-
-      <div class="img">
+      <!-- 若图像地址为no，则不需要显示 -->
+      <div class="img m-mobile-hide" v-if="!(imageSrc == 'no')">
         <a href="#">
-            <el-image class="image" :src="imageSrc" fit="cover">
-                 <template #error>
-                    <div class="image-slot">
-                    <i class="el-icon-picture-outline"></i>
-                    </div>
-                </template>
-            </el-image>
-          <!-- <img src="../../assets/img/cat.jpg" alt="" /> -->
+          <el-image class="image" :src="imageSrc" fit="cover">
+            <template #error>
+              <div class="image-slot">
+                <i class="el-icon-picture-outline"></i>
+              </div>
+            </template>
+          </el-image>
         </a>
       </div>
     </div>
@@ -38,63 +47,66 @@
 </template>
 
 <script>
-
-import logo from '@/assets/img/cat.jpg'
-
 export default {
   name: "card-describe",
-  data(){
-      return{
-
-      }
+  data() {
+    return {};
   },
-  props:{
-      title:{
-          type:String,
-          default: '标题'
-      },
-      describe:{
-          type:String,
-          default: '描述内容'
-      },
-      imageSrc:{
-          type:String,
-          default: logo
-      },
-      pinglun:{
-          type:Number,
-          default: 0
-      },
-      guankan:{
-          type:Number,
-          default: 0
-      },
-      shijian:{
-          type:String,
-          default: '未知'
-      },
-      InfoSrc:{
-          type:String,
-          default: '#'
-      },
-
-
+  props: {
+    title: {
+      type: String,
+      default: "标题",
+    },
+    describe: {
+      type: String,
+      default: "描述内容",
+    },
+    imageSrc: {
+      type: String,
+      default:
+        "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+      // default: "no",
+    },
+    pinglun: {
+      type: Number,
+      default: 0,
+    },
+    guankan: {
+      type: Number,
+      default: 0,
+    },
+    shijian: {
+      type: String,
+      default: "未知",
+    },
+    InfoSrc: {
+      type: String,
+      default: "#",
+    },
   },
-  methods:{
-      infoCli(event){
-          //路由跳转
-      }
-  }
+  mounted() {
+    if (this.imageSrc == "no") {
+      // document.querySelector(".content").style.width="99%"
+      // console.log(document.querySelector(".content"))
+    }
+  },
+  methods: {
+    infoCli(event) {
+      //路由跳转
+    },
+  },
 };
 </script>
 
 <style lang="less" scoped>
-.el-card{
-    margin-bottom: 10px;
+
+.el-card.is-hover-shadow:hover {
+  box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.3);
 }
+
 .card-box {
   display: flex;
-  flex-direction: "row";
+  flex-direction: row;
   width: 100% !important;
 
   .content {
@@ -102,7 +114,6 @@ export default {
     flex-direction: column;
     // background-color: rgb(162, 45, 45);
     display: inline-flex;
-    width: 65%;
     align-items: flex-start;
 
     .top {
@@ -111,7 +122,6 @@ export default {
     }
 
     .title {
-        
       //不留空白
       white-space: nowrap;
       margin-left: 10px;
@@ -121,25 +131,22 @@ export default {
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
-      
+
       word-wrap: break-word;
     }
 
     .info {
-        
       i {
-         
         color: #888;
         font-size: 12px;
 
-        span{
-             margin-left: 6px;
+        span {
+          margin-left: 6px;
         }
       }
     }
 
     .des {
-        
       margin-bottom: 1.5em;
       position: relative;
       width: 100%;
@@ -152,6 +159,7 @@ export default {
       p {
         display: -webkit-box;
         -webkit-box-orient: vertical;
+        //多行文字溢出
         -webkit-line-clamp: 3;
         height: 60px;
         overflow: hidden;
@@ -166,8 +174,8 @@ export default {
 
   .img {
     width: 30%;
-    min-width: 200px;
-    min-height: 200px;
+    min-width: 250px;
+    min-height: 250px;
     max-width: 300px;
     max-height: 300px;
     position: relative;
@@ -175,15 +183,23 @@ export default {
     background-repeat: no-repeat;
     background-size: cover;
     overflow: hidden;
-    border-radius: 0 10px 10px 0;
+    border-radius: 5px 5px 5px 5px;
     .image {
-      width: 100%;
+      // width: 100%;
       height: 100%;
       -o-object-fit: cover;
+      //图片剪切保持原比例
       object-fit: cover;
+      //对指针事件不做反应
       pointer-events: none;
       transition: all 0.6s;
     }
+  }
+}
+//移动端适配
+@media screen and (max-width: 768px) {
+  .card-box {
+    flex-direction: column-reverse;
   }
 }
 </style>
