@@ -5,6 +5,7 @@ import store from './store'
 import installElementPlus from './plugins/element'
 import axios from 'axios'
 import './assets/css/common.css'
+import 'animate.css'
 axios.defaults.withCredentials = true
 
 const app = createApp(App)
