@@ -1,44 +1,43 @@
 <template>
   <el-aside class="m-mobile-hide" width="20%">
     <SideMenu
+      @getArticles="getArticlesA"
       title="分类"
-      :items="[
-        { name: 'java', count: '3' },
-        { name: 'golang', count: '6' },
-        { name: 'javascript', count: '3' },
-        { name: 'python', count: '7' },
-      ]"
+      :items="categoryOptions"
     ></SideMenu>
   </el-aside>
   <el-main>
-    <el-scrollbar wrap-style="overflow: visible">
+    <el-scrollbar wrap-style="overflow: visible;width:100%">
       <el-card :body-style="{ padding: '2%' }" class="c-margin-b">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item><a href="#">文章</a></el-breadcrumb-item>
         </el-breadcrumb>
       </el-card>
+      <ul class="articleList">
+        <li v-for="article in listData" :key="article.id">
+          <ArticlesCard
+            :id="article.id"
+            :title="article.title"
+            guankan="2"
+            pinglun="2"
+            :imageSrc="article.avatar != '无' ? article.avatarUrl : '无'"
+            :createTime="article.createTime"
+            :describe="article.des"
+          ></ArticlesCard>
+        </li>
+      </ul>
 
-      <ArticlesCard
-        class="a"
-        title="我的传奇一生"
-        guankan="2"
-        pinglun="2"
-        shijian="2000-1-1"
-        describe="我家门口有一颗枣树"
-      ></ArticlesCard>
       <el-scrollbar>
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          @prev-click="handlePrevClick"
-          @next-click="handleNextClick"
           hide-on-single-page="false"
-          pager-count="6"
           background
+          :page-sizes="[10, 20, 30, 50]"
           layout="prev, pager, next,jumper"
-          :page-size="10"
-          :total="1000"
+          :page-size="ListInfo.size"
+          :total="ListInfo.total"
         >
         </el-pagination>
       </el-scrollbar>
@@ -58,10 +57,7 @@
     <NewsCard
       titleIcon="el-icon-close-notification"
       title="最新内容"
-      :items="[
-        { time: '2000-1-1', title: '钢铁是怎样炼成的', category: 'java' },
-        { time: '2000-1-1', title: '钢铁是怎样炼成的', category: 'java' },
-      ]"
+      :items="NewArticles"
     ></NewsCard>
   </el-aside>
 </template>
@@ -71,10 +67,25 @@ import ArticlesCard from "@/components/articles/articles-card";
 import SideMenu from "@/components/articles/side-menu";
 import SideTag from "@/components/articles/side-tag";
 import NewsCard from "@/components/articles/news-card";
-
+import { getNewArticle,getCategoryList, getArticleList } from "@/api/article";
 export default {
   data() {
-    return {};
+    return {
+      ListInfo: {
+        total: 0,
+        page: 1,
+        size: 10,
+      },
+      listQuery: {
+        createTime: null,
+        title: null,
+        tags: [],
+        categoryId: null,
+      },
+      listData: [],
+      categoryOptions: [],
+      NewArticles:[],
+    };
   },
   components: {
     ArticlesCard,
@@ -83,26 +94,84 @@ export default {
     NewsCard,
   },
   methods: {
+    init() {
+      this.getArticlesA({});
+      this.getCategorysA({});
+      this.getNewArticlesA({});
+    },
+    getNewArticlesA(query) {
+      query["order"] = "update_time";
+      query["limit"] = 5;
+      query["published"] = "true";
+      query["deleted"] = "false";
+      getNewArticle(query)
+        .then((response) => {
+
+          const { data } = response.data;
+          this.NewArticles = data.articleList
+        })
+        .catch((error) => {
+          this.$message.error(error.message);
+        });
+    },
+    test() {
+      alert("seshi");
+    },
+    getArticlesA(query) {
+      query["published"] = "true";
+      query["deleted"] = "false";
+      query["size"] = this.ListInfo.size;
+      (query["page"] = this.ListInfo.page),
+        (query["tags"] = this.listQuery.tags),
+        getArticleList(query)
+          .then((response) => {
+            const { data } = response.data;
+            this.ListInfo.total = data.total;
+            this.listData = data.articleList;
+          })
+          .catch((error) => {
+            this.$message.error(error.message);
+          });
+    },
+    getCategorysA(query) {
+      query["CountCondition"] = "published";
+      getCategoryList(query)
+        .then((response) => {
+          const { data } = response.data;
+          this.categoryOptions = data.categoryList;
+        })
+        .catch((error) => {
+          this.$message.error(error.message);
+        });
+    },
     //每页数量改变
     handleSizeChange(pageSize) {
-      // alert('每页数量改变')
+      this.ListInfo.size = pageSize;
+      this.getArticlesA();
     },
     //当前页改变
     handleCurrentChange(pageIndex) {
-      // alert('当前页改变')
+      this.ListInfo.page = pageIndex;
+      this.getArticlesA();
     },
-    //前一页
-    handlePrevClick(pageIndex) {
-      // alert('前一页')
-    },
-    //后一页
-    handleNextClick(pageIndex) {
-      // alert('后一页')
-    },
+  },
+  created() {
+    this.init();
   },
 };
 </script>
 
 <style lang="less" scoped>
+.el-main {
+  .el-scrollbar {
+    overflow: visible !important;
+  }
+}
 
+ul {
+  padding-left: 0px;
+  li {
+    list-style: none;
+  }
+}
 </style>

@@ -4,12 +4,12 @@
       <h3 class="title"><i style="margin-right:2px" :class="titleIcon"></i>{{title}}</h3>
 
       <ul class="list">
-        <li v-for="(item,i) in items" :key="i">
-          <a href="#" class="level">
+        <li :class="{'active':item.id == activeId}" v-for="(item,i) in items" :key="i">
+          <a @click="getArticlesByCategory(item.id)" class="level">
             <span class="level-start"
               ><span class="level-item">{{item.name}}</span></span
             >
-            <span class="level-end"><span class="level-item tag">{{item.count}}</span></span>
+            <span class="level-end"><span class="level-item tag">{{item.articleNum}}</span></span>
           </a>
         </li>
 
@@ -21,6 +21,11 @@
 <script>
 export default {
   name: "side-menu",
+  data(){
+    return{
+      activeId:0,
+    }
+  },
   props: {
       //element图标
       titleIcon:{
@@ -37,6 +42,21 @@ export default {
           default: []
       },
   },
+  methods:{
+    getArticlesByCategory(id){
+      let query = {
+      }
+      if(id == this.activeId){//已选中
+        this.activeId = 0
+      }else{
+        query['categoryId'] = id
+        this.activeId = id
+      }
+      
+      this.$emit('getArticles',query)
+      debugger
+    },
+  }
 };
 </script>
 
@@ -85,6 +105,11 @@ export default {
       :hover {
         background-color: whitesmoke;
         color: #363636;
+      }
+
+      &.active{
+        background-color: whitesmoke;
+        color: #322e2e;
       }
 
       a.level {

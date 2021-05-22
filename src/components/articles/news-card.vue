@@ -7,9 +7,9 @@
 
       <ul class="list">
         <li v-for="(item, i) in items" :key="i">
-          <div class="time">{{ item.time }}</div>
-          <a href="#" class="title">{{ item.title }}</a>
-          <a href="#" class="category"><i style="margin-right:2px" class="el-icon-copy-document"></i>{{ item.category }}</a>
+          <div class="time">{{ item.updateTime }}</div>
+          <a @click="routeToDetails(item.id)" class="c-hover-blue title cursor-pointer">{{ item.title }}</a>
+          <a class="category"><i style="margin-right:2px" class="el-icon-copy-document"></i>{{ item.cName }}</a>
         </li>
       </ul>
     </div>
@@ -35,6 +35,14 @@ export default {
       default: [],
     },
   },
+  methods:{
+    routeToDetails(id) {
+      //跳转到详细页面
+      this.$router.push({
+        path: `/articles/details/${id}`,
+      });
+    },
+  }
 };
 </script>
 
@@ -94,9 +102,7 @@ export default {
           color: #363636;
             text-decoration: none;
             font-size: 1rem !important;
-            &:hover{
-              color: #3273dc !important;
-          }
+
           
       }
 
@@ -107,9 +113,7 @@ export default {
           font-size: 0.85rem !important;
           line-height: 1rem;
           text-align: center;
-          &:hover{
-              color: #3273dc !important;
-          }
+
       }
     }
   }

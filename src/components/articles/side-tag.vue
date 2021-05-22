@@ -7,11 +7,7 @@
           <li v-for="(item,i) in checkItems" :key="i">
               <!-- <el-tag @change="onChange" :checked="item.checked" size="small">{{item.name}}</el-tag> -->
               <el-check-tag @change="onTagCheckedChange(item)" :checked="checkItems[i].checked" size="small">{{item.name}}</el-check-tag>
-
           </li>
-          
-          
-
       </ul>
     </div>
   </el-card>
@@ -45,6 +41,8 @@ export default {
   methods:{
       onTagCheckedChange(item){
           item.checked = !item.checked
+          debugger
+          this.checkItems
       }
   },
   created(){

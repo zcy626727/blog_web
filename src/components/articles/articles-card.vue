@@ -1,21 +1,32 @@
 <template>
-  <el-card :body-style="{ padding: '1%' }" shadow="hover" class="c-margin-b">
+  <el-card
+    :body-style="{ padding: '1%' }"
+    shadow="hover"
+    class="c-margin-b c-shadow"
+  >
     <div class="card-box">
       <div
         class="content"
         :style="
-          imageSrc == 'no' ? 'width: 99% !important;' : 'width: 65% !important;'
+          imageSrc == '无' ? 'width: 99% !important;' : 'width: 65% !important;'
         "
         id="content"
       >
         <div class="top">
-          <i class="el-icon-time"> 发布于{{ shijian }} </i>&ensp;
+          <i class="el-icon-time"> 发布于{{ createTime }} </i>&ensp;
           <!-- <i class="iconfont icon-redu"></i> -->
         </div>
         <div class="title">
-          <h3><a class="c-hover-blue c-text" @click="routeToDetails(1)" style="cursor:pointer;">{{ title }}</a></h3>
+          <h3>
+            <a
+              class="c-hover-blue c-text"
+              @click="routeToDetails(id)"
+              style="cursor: pointer"
+              >{{ title }}</a
+            >
+          </h3>
         </div>
-        <div class="info ">
+        <div class="info">
           <i class="iconfont icon-yanjing"
             ><span>{{ guankan }}观看</span></i
           >&ensp;
@@ -31,7 +42,7 @@
         </div>
       </div>
       <!-- 若图像地址为no，则不需要显示 -->
-      <div class="img m-mobile-hide" v-if="!(imageSrc == 'no')">
+      <div class="img m-mobile-hide" v-if="!(imageSrc == '无')">
         <a href="#">
           <el-image class="image" :src="imageSrc" fit="cover">
             <template #error>
@@ -53,6 +64,7 @@ export default {
     return {};
   },
   props: {
+    id: String,
     title: {
       type: String,
       default: "标题",
@@ -63,8 +75,7 @@ export default {
     },
     imageSrc: {
       type: String,
-      default:
-        "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+      default: "无",
       // default: "no",
     },
     pinglun: {
@@ -75,13 +86,9 @@ export default {
       type: Number,
       default: 0,
     },
-    shijian: {
+    createTime: {
       type: String,
       default: "未知",
-    },
-    InfoSrc: {
-      type: String,
-      default: "#",
     },
   },
   mounted() {
@@ -94,17 +101,17 @@ export default {
     infoCli(event) {
       //路由跳转
     },
-    routeToDetails(id){//跳转到详细页面
+    routeToDetails(id) {
+      //跳转到详细页面
       this.$router.push({
-          path: `/articles/details/${id}`,
-        })
-    }
+        path: `/articles/details/${id}`,
+      });
+    },
   },
 };
 </script>
 
 <style lang="less" scoped>
-
 .el-card.is-hover-shadow:hover {
   box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.3);
 }
@@ -130,7 +137,7 @@ export default {
       //不留空白
       white-space: nowrap;
       margin-left: 10px;
-      
+
       //单行超出隐藏
       overflow: hidden;
       text-overflow: ellipsis;
@@ -139,9 +146,9 @@ export default {
       -webkit-line-clamp: 2;
 
       word-wrap: break-word;
-      
-      h3{
-        a{
+
+      h3 {
+        a {
           color: #242424;
         }
       }
@@ -185,11 +192,9 @@ export default {
   }
 
   .img {
-    width: 30%;
-    min-width: 250px;
-    min-height: 250px;
-    max-width: 300px;
-    max-height: 300px;
+    width: 250px;
+    height: 250px;
+
     position: relative;
     display: block;
     background-repeat: no-repeat;

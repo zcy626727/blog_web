@@ -12,7 +12,6 @@
   </div>
 
   <el-menu
-  
     :default-active="2"
     class="menu"
     mode="horizontal"
@@ -47,16 +46,16 @@ export default {
   display: flex;
   justify-content: space-between;
   align-content: space-around;
-  height: 60px;
-  
+  background-color: rgb(51, 51, 51);;
+  padding: 0px 20px 2px 20px;
   
   .logo{
     position: relative;
     display: inline-block;
-    width: 45px;
+    width: 35px;
     .el-image{
       margin-top: 10px;
-      width:45px;
+      width:35px;
     }
     .image-slot{
       margin-top: -5px;
@@ -64,10 +63,16 @@ export default {
     
   }
 
-  .menu{
-    position: relative;
-    display: inline-block;
+  .el-menu{
+    border-bottom: solid 1px rgb(51, 51, 51) !important;
+
+    .el-menu-item{
+      line-height: 59px;
+      height:54px;
+    }
   }
+
+
 }
 
 
