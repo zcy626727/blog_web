@@ -20,7 +20,7 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .el-main {
   padding: 0px;
   .entry {
@@ -53,36 +53,4 @@ export default {
   }
 }
 
-// .el-card {
-//   margin-bottom: 10px;
-//   border: 1px solid #dde1eb;
-// }
-
-// .el-scrollbar {
-//   overflow: visible !important;
-// }
-
-// .el-aside {
-
-//     background-color: #D3DCE6;
-//     color: #333;
-//     text-align: center;
-//     line-height: 200px;
-//   }
-// .el-col {
-//   border-radius: 4px;
-// }
-// .bg-purple-dark {
-//   background: #99a9bf;
-// }
-// .bg-purple {
-//   background: #d3dce6;
-// }
-// .bg-purple-light {
-//   background: #e5e9f2;
-// }
-// .grid-content {
-//   border-radius: 4px;
-//   min-height: 36px;
-// }
 </style>

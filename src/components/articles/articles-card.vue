@@ -38,7 +38,7 @@
           <p>{{ describe }}</p>
         </div>
         <div class="footer">
-          <el-button @click="infoCli">详细信息</el-button>
+          <el-button @click="routeToDetails(id)">详细信息</el-button>
         </div>
       </div>
       <!-- 若图像地址为no，则不需要显示 -->

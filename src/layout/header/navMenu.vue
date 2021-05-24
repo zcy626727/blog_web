@@ -46,7 +46,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-content: space-around;
-  background-color: rgb(51, 51, 51);;
+  background-color: rgb(51, 51, 51);
   padding: 0px 20px 2px 20px;
   
   .logo{
@@ -54,7 +54,8 @@ export default {
     display: inline-block;
     width: 35px;
     .el-image{
-      margin-top: 10px;
+      margin-top: 12px;
+      border-radius: 50%;
       width:35px;
     }
     .image-slot{

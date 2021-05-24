@@ -1,5 +1,5 @@
 <template>
-  <el-aside class="m-mobile-hide" width="20%">
+  <el-aside style="overflow: visible" class="m-mobile-hide" width="20%">
     <SideMenu
       @getArticles="getArticlesA"
       title="分类"
@@ -43,16 +43,11 @@
       </el-scrollbar>
     </el-scrollbar>
   </el-main>
-  <el-aside class="m-mobile-hide" width="20%">
+  <el-aside style="overflow: visible" class="m-mobile-hide" width="20%">
     <SideTag
-      :callback="test"
+      @getArticles="getArticlesA"
       title="标签"
-      :items="[
-        { name: 'java', count: '3', checked: true },
-        { name: 'golang', count: '6', checked: false },
-        { name: 'javascript', count: '3', checked: true },
-        { name: 'python', count: '7', checked: true },
-      ]"
+      :items="TagOptions"
     ></SideTag>
     <NewsCard
       titleIcon="el-icon-close-notification"
@@ -67,7 +62,12 @@ import ArticlesCard from "@/components/articles/articles-card";
 import SideMenu from "@/components/articles/side-menu";
 import SideTag from "@/components/articles/side-tag";
 import NewsCard from "@/components/articles/news-card";
-import { getNewArticle,getCategoryList, getArticleList } from "@/api/article";
+import {
+  getTagList,
+  getNewArticle,
+  getCategoryList,
+  getArticleList,
+} from "@/api/article";
 export default {
   data() {
     return {
@@ -79,12 +79,12 @@ export default {
       listQuery: {
         createTime: null,
         title: null,
-        tags: [],
         categoryId: null,
       },
       listData: [],
       categoryOptions: [],
-      NewArticles:[],
+      TagOptions: [],
+      NewArticles: [],
     };
   },
   components: {
@@ -95,6 +95,7 @@ export default {
   },
   methods: {
     init() {
+      this.getTagListA();
       this.getArticlesA({});
       this.getCategorysA({});
       this.getNewArticlesA({});
@@ -106,9 +107,8 @@ export default {
       query["deleted"] = "false";
       getNewArticle(query)
         .then((response) => {
-
           const { data } = response.data;
-          this.NewArticles = data.articleList
+          this.NewArticles = data.articleList;
         })
         .catch((error) => {
           this.$message.error(error.message);
@@ -121,8 +121,10 @@ export default {
       query["published"] = "true";
       query["deleted"] = "false";
       query["size"] = this.ListInfo.size;
-      (query["page"] = this.ListInfo.page),
-        (query["tags"] = this.listQuery.tags),
+      query["page"] = this.ListInfo.page
+      if(!query['tags']){
+        query['tags'] = []
+      }
         getArticleList(query)
           .then((response) => {
             const { data } = response.data;
@@ -132,6 +134,19 @@ export default {
           .catch((error) => {
             this.$message.error(error.message);
           });
+    },
+    getTagListA() {
+      getTagList()
+        .then((response) => {
+          const { data } = response.data;
+          for (let i in data.tagList) {
+            data.tagList[i]["checked"] = true;
+          }
+          this.TagOptions = data.tagList;
+        })
+        .catch((error) => {
+          this.$message.error(error.message);
+        });
     },
     getCategorysA(query) {
       query["CountCondition"] = "published";

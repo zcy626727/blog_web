@@ -13,9 +13,11 @@
     "core-js": "^3.6.5",
     "element-plus": "^1.0.2-beta.28",
     "github-markdown-css": "^4.0.0",
+    "highlight.js": "^10.7.2",
     "html-loader": "^2.1.2",
     "markdown-loader": "^6.0.0",
     "marked": "^2.0.3",
+    "tocbot": "^4.12.3",
     "vue": "^3.0.0",
     "vue-markdown-loader": "^2.4.1",
     "vue-router": "^4.0.0-0",
@@ -33,6 +35,8 @@
     "eslint-plugin-vue": "^7.0.0",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
+    "sass": "^1.27.0",
+    "sass-loader": "^10.0.4",
     "vue-cli-plugin-element-plus": "0.0.13"
   }
 }
