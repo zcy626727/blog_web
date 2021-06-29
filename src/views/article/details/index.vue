@@ -1,9 +1,9 @@
 <template>
-  <el-aside class="c-margin-t-large m-mobile-hide" width="20%">
+  <el-aside class="toc-outer c-margin-t-large m-mobile-hide" width="20%">
     <div class="js-toc"></div>
   </el-aside>
 
-  <el-main style="overflow: visible">
+  <el-main class="details-main" style="overflow: visible">
     <el-card :body-style="{ padding: '1rem' }" class="c-margin-bt-large">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
@@ -36,14 +36,7 @@
           }}</el-tag>
         </p>
       </div>
-      <button @click="test">点击</button>
-      <!-- <div class="js-toc-content">
-        <h2 id="id1">1
-          <h3>1-1</h3>
-        </h2>
-        <h2>2</h2>
-        <h2>3</h2>
-      </div> -->
+
       <div class="markdown-body entry-content c-margin-b-large js-toc-content">
         <dl v-html="html"></dl>
       </div>
@@ -51,7 +44,6 @@
       <!-- <a href="#" class="c-hover-blue c-border-radius">sss</a> -->
     </div>
   </el-main>
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.11.1/tocbot.css"> -->
 
   <!-- <el-aside class="c-margin-t-large" width="10%">
     
@@ -84,9 +76,6 @@ export default {
         // 解析的元素
         headingSelector: "h1, h2, h3",
         // scrollContainer: ".el-scrollbar__wrap",
-        // skipRendering: true
-        // scrollSmoothOffset: -1,
-        // Smooth scrolling enabled.
         scrollSmooth: true,
         // Smooth scroll duration.
         scrollSmoothDuration: 420,
@@ -144,7 +133,7 @@ export default {
 
 <style lang="scss">
 @import "tocbot/src/scss/tocbot";
-.el-main {
+.details-main {
   padding: 0px;
   .entry {
     text-align: left;
@@ -175,20 +164,23 @@ export default {
   }
 }
 
-.js-toc {
-  list-style-type: none;
-  position: fixed;
-  width: 340px;
-  top: 10%;
-  left: 5%;
-  text-align: left;
-  ol {
-    list-style: none;
-    li {
+.toc-outer {
+  overflow: visible;
+  .js-toc {
+    position: sticky;
+    width: 340px;
+    margin: 0px auto;
+    top: 10px;
+    left: 5%;
+    text-align: left;
+    ol {
       list-style: none;
+      li {
+        list-style: none;
 
-      a {
-        text-decoration: none;
+        a {
+          text-decoration: none;
+        }
       }
     }
   }

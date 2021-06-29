@@ -35,7 +35,7 @@
           hide-on-single-page="false"
           background
           :page-sizes="[10, 20, 30, 50]"
-          layout="prev, pager, next,jumper"
+          layout="total, sizes, prev, pager, next, jumper"
           :page-size="ListInfo.size"
           :total="ListInfo.total"
         >
@@ -121,19 +121,20 @@ export default {
       query["published"] = "true";
       query["deleted"] = "false";
       query["size"] = this.ListInfo.size;
-      query["page"] = this.ListInfo.page
-      if(!query['tags']){
-        query['tags'] = []
+      query["page"] = this.ListInfo.page;
+      query["order"] = "create_time";
+      if (!query["tags"]) {
+        query["tags"] = [];
       }
-        getArticleList(query)
-          .then((response) => {
-            const { data } = response.data;
-            this.ListInfo.total = data.total;
-            this.listData = data.articleList;
-          })
-          .catch((error) => {
-            this.$message.error(error.message);
-          });
+      getArticleList(query)
+        .then((response) => {
+          const { data } = response.data;
+          this.ListInfo.total = data.total;
+          this.listData = data.articleList;
+        })
+        .catch((error) => {
+          this.$message.error(error.message);
+        });
     },
     getTagListA() {
       getTagList()
@@ -162,12 +163,12 @@ export default {
     //每页数量改变
     handleSizeChange(pageSize) {
       this.ListInfo.size = pageSize;
-      this.getArticlesA();
+      this.getArticlesA({});
     },
     //当前页改变
     handleCurrentChange(pageIndex) {
       this.ListInfo.page = pageIndex;
-      this.getArticlesA();
+      this.getArticlesA({});
     },
   },
   created() {

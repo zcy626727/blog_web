@@ -63,6 +63,7 @@ export default {
 /*整体部分*/
 ::-webkit-scrollbar {
   width: 3px;
+  height: 3px;
   // margin-top: 50px;
 }
 

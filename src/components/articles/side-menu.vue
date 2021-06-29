@@ -9,7 +9,7 @@
             <span class="level-start"
               ><span class="level-item">{{item.name}}</span></span
             >
-            <span class="level-end"><span class="level-item tag">{{item.articleNum}}</span></span>
+            <span class="level-end"><span class="level-item tag">{{item.publishedNum}}</span></span>
           </a>
         </li>
 
