@@ -19,8 +19,8 @@
           <ArticlesCard
             :id="article.id"
             :title="article.title"
-            guankan="2"
-            pinglun="2"
+            :watch="article.watchCount"
+            :favour="article.favourCount"
             :imageSrc="article.avatar != '无' ? article.avatarUrl : '无'"
             :createTime="article.createTime"
             :describe="article.des"

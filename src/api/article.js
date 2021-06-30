@@ -85,6 +85,17 @@ export function saveCategory(data) {
     })
 }
 
+//增加观看数
+export function incWatchCount(id) {
+    return request({
+        url: '/article/incWatchCount',
+        method: 'get',
+        params: {
+            id
+        }
+    })
+}
+
 //设置文章状态
 export function putStatus(data) {
     return request({

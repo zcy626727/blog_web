@@ -28,10 +28,10 @@
         </div>
         <div class="info">
           <i class="iconfont icon-yanjing"
-            ><span>{{ guankan }}观看</span></i
+            ><span>{{ watch }}观看</span></i
           >&ensp;
           <i class="iconfont icon-pinglun"
-            ><span>{{ pinglun }}条评论</span></i
+            ><span>{{ favour }}点赞</span></i
           >
         </div>
         <div class="des">
@@ -78,11 +78,11 @@ export default {
       default: "无",
       // default: "no",
     },
-    pinglun: {
+    favour: {
       type: Number,
       default: 0,
     },
-    guankan: {
+    watch: {
       type: Number,
       default: 0,
     },

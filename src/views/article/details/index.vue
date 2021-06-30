@@ -23,12 +23,13 @@
       <div class="entry-title">
         <h1>{{ title }}</h1>
         <p class="entry-des c-color-text">
-          <span class="time"
-            ><i class="iconfont icon-yanjing c-margin-i"></i>2000-7-1</span
-          >
           <span class="watch"
-            ><i class="iconfont icon-time c-margin-i"></i>255观看</span
+            ><i style="font-size: 15px;"  class="iconfont icon-time c-margin-i"></i>{{this.createTime.split(" ")[0]}}</span
           >
+          <span class="time"
+            ><i style="font-size: 18px;" class="iconfont icon-yanjing c-margin-i"></i>{{this.watchCount}}观看</span
+          >
+          
         </p>
         <p class="entry-tag c-color-text">
           <el-tag v-for="(item, i) in tags" :key="i" size="small">{{
@@ -40,7 +41,7 @@
       <div class="markdown-body entry-content c-margin-b-large js-toc-content">
         <dl v-html="html"></dl>
       </div>
-      <div class="c-border c-margin-bt-large">评论</div>
+      <!-- <div class="c-border c-margin-bt-large">评论</div> -->
       <!-- <a href="#" class="c-hover-blue c-border-radius">sss</a> -->
     </div>
   </el-main>
@@ -55,7 +56,7 @@ import tocbot from "tocbot";
 import "github-markdown-css";
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
-import { getArticleById } from "@/api/article";
+import { getArticleById,incWatchCount } from "@/api/article";
 import marked from "marked";
 
 export default {
@@ -64,6 +65,8 @@ export default {
     return {
       html: "",
       title: null,
+      watchCount:'0',
+      createTime:'',
       tags: [],
       loading: {
         markedLoading: true,
@@ -87,10 +90,15 @@ export default {
       alert("11");
     },
     init() {
-      this.getArticleByIdA(this.$route.params.id);
+      let aid = this.$route.params.id
+      this.getArticleByIdA(aid);
+      this.incWatchCountA(aid)
     },
     tocbotinit() {
       tocbot.init(this.options);
+    },
+    incWatchCountA(aid){
+      incWatchCount(aid)
     },
     //获取文章详细信息
     getArticleByIdA(id) {
@@ -99,6 +107,8 @@ export default {
           const { article } = response.data.data;
           this.title = article.title;
           this.tags = article.tags;
+          this.watchCount = article.watchCount;
+          this.createTime = article.createTime
           this.html = marked(article.content);
           this.loading.markedLoading = false;
           setTimeout(this.tocbotinit, 1000);
@@ -147,8 +157,10 @@ export default {
       }
 
       .entry-des {
+        
         span {
           padding-right: 10px;
+          
         }
       }
 
@@ -160,6 +172,7 @@ export default {
     }
 
     .entry-content {
+      
     }
   }
 }
