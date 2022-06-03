@@ -7,7 +7,7 @@
     <el-card :body-style="{ padding: '1rem' }" class="c-margin-bt-large">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item><a href="/articles">文章</a></el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/articles' }">文章</el-breadcrumb-item>
         <el-breadcrumb-item
           ><a href="#">{{ title }}</a></el-breadcrumb-item
         >

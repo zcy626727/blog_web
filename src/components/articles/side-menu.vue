@@ -47,6 +47,7 @@ export default {
       let query = {
       }
       if(id == this.activeId){//已选中
+        query['categoryId'] = 0
         this.activeId = 0
       }else{
         query['categoryId'] = id

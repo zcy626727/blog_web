@@ -7,7 +7,6 @@
     ></SideMenu>
   </el-aside>
   <el-main>
-    <el-scrollbar wrap-style="overflow: visible;width:100%">
       <el-card :body-style="{ padding: '2%' }" class="c-margin-b">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
@@ -15,15 +14,15 @@
         </el-breadcrumb>
       </el-card>
       <ul class="articleList">
-        <li v-for="article in listData" :key="article.id">
+        <li v-for="(article,index) in listData" :key="index" :class="reload.aCardClass">
+          <!-- animate使用 -->
           <ArticlesCard
             :id="article.id"
             :title="article.title"
             :watch="article.watchCount"
             :favour="article.favourCount"
             :imageSrc="article.avatar != '无' ? article.avatarUrl : '无'"
-            :createTime="article.createTime"
-            :describe="article.des"
+            :article="article"
           ></ArticlesCard>
         </li>
       </ul>
@@ -41,7 +40,8 @@
         >
         </el-pagination>
       </el-scrollbar>
-    </el-scrollbar>
+
+
   </el-main>
   <el-aside style="overflow: visible" class="m-mobile-hide" width="20%">
     <SideTag
@@ -85,6 +85,10 @@ export default {
       categoryOptions: [],
       TagOptions: [],
       NewArticles: [],
+      reload:{
+        aCardClass:'animate__animated',
+        aCardClassTimer:null
+      }
     };
   },
   components: {
@@ -94,6 +98,19 @@ export default {
     NewsCard,
   },
   methods: {
+    reloadArticlesCards(sty){
+      if(sty){
+        this.reload.aCardClass = "animate__animated "+sty
+        this.reload.aCardClassTimer = setTimeout(this.reloadArticlesCards, 1000);
+      }else{
+        this.reload.aCardClass = "animate__animated"
+        if(this.reload.aCardClassTimer){
+          clearTimeout(this.reload.aCardClassTimer);
+        }
+      }
+      
+      
+    },
     init() {
       this.getTagListA();
       this.getArticlesA({});
@@ -126,11 +143,25 @@ export default {
       if (!query["tags"]) {
         query["tags"] = [];
       }
+      debugger
+      if(query.categoryId==0){
+        this.listQuery.categoryId = undefined
+      }else{
+        if(query.categoryId){
+          this.listQuery.categoryId = query.categoryId
+        }
+      }
+      
+      // if(this.listQuery.categoryId){
+        query["categoryId"] = this.listQuery.categoryId
+      // }
       getArticleList(query)
         .then((response) => {
+          // debugger
           const { data } = response.data;
           this.ListInfo.total = data.total;
           this.listData = data.articleList;
+          this.reloadArticlesCards("animate__bounceInUp")
         })
         .catch((error) => {
           this.$message.error(error.message);
@@ -179,6 +210,7 @@ export default {
 
 <style lang="less" scoped>
 .el-main {
+  overflow: hidden;
   .el-scrollbar {
     overflow: visible !important;
   }

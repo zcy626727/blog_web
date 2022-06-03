@@ -1,6 +1,12 @@
 const webpack = require("webpack");
 
 module.exports = {
+    // 关闭es校验
+    lintOnSave: false,
+    publicPath: '/blog',
+    outputDir: 'blog',
+    assetsDir: 'static',
+    productionSourceMap: false,
     devServer: {
         port: process.env.port || 8800, // dev port
         overlay: {
@@ -17,7 +23,6 @@ module.exports = {
             },
         }
     },
-    lintOnSave: false,
     chainWebpack: config => {
         config.module
             .rule('')
@@ -29,18 +34,14 @@ module.exports = {
             .loader('markdown-loader')
             .end()
     },
+    configureWebpack: (config) => {
+        if (process.env.NODE_ENV === 'production') { // 为生产环境修改配置...
+            config.mode = 'production';
+            config["performance"] = { //打包文件大小配置
+                "maxEntrypointSize": 10000000,
+                "maxAssetSize": 30000000
+            }
+        }
+    },
 
-
-    // configureWebpack: {
-    //   devtool: 'source-map',
-    //   plugins: [
-    //     new webpack.ProvidePlugin({
-    //       $: "jquery",
-    //       jQuery: "jquery",
-    //       jquery: "jquery",
-    //       "window.jQuery": "jquery",
-    //       Popper: ["popper.js", "default"]
-    //     })
-    //   ]
-    // }
 };
