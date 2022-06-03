@@ -7,6 +7,12 @@ module.exports = {
     outputDir: 'blog',
     assetsDir: 'static',
     productionSourceMap: false,
+    // devServer: {
+    //     // history模式下的url会请求到服务器端，但是服务器端并没有这一个资源文件，就会返回404，所以需要配置这一项
+    //     historyApiFallback: {
+    //         index: '/blog/index.html' //与output的publicPath
+    //     },
+    // },
     devServer: {
         port: process.env.port || 8800, // dev port
         overlay: {
@@ -43,5 +49,6 @@ module.exports = {
             }
         }
     },
+
 
 };

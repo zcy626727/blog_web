@@ -1,8 +1,6 @@
 <template>
-  <el-aside class="c-margin-t-large m-mobile-hide" width="20%">left</el-aside>
   <dl v-html="html"></dl>
   <el-main>
-    
   </el-main>
   <!-- <el-aside class="c-margin-t-large" width="20%">right</el-aside> -->
 </template>
@@ -11,11 +9,11 @@
 export default {
   data() {
     return {
-      html: "未解析",
+      html: "用于测试",
     };
   },
   created() {
-    this.html = require("marked")("# aaa");
+    // this.html = require("marked")("# ");
   },
 };
 </script>

@@ -1,24 +1,35 @@
-# front
+# 博客前端
+大二时期学习springboot时的练手项目
 
-## Project setup
+## 项目启动
 ```
+# 下载依赖
 npm install
-```
 
-### Compiles and hot-reloads for development
-```
+# 启动
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## 使用技术
+前端
+- vue
+- element-ui
+- axios
+- normalize.css
 
-### Lints and fixes files
-```
-npm run lint
-```
+后端
+- spring boot
+- spring security
+- mysql
+- redis
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 界面
+### 管理界面
+![](./pic/1.png)
+![](./pic/2.png)
+![](./pic/3.png)
+
+### 前端界面
+![](./pic/4.png)
+![](./pic/5.png)
+
