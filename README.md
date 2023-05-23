@@ -1,5 +1,5 @@
 # 博客前端
-大二时期学习springboot时的练手项目
+大二 springboot vue
 
 ## 项目启动
 ```
